@@ -5,16 +5,11 @@ git commit -m "first commit"
 git remote add origin https://github.com/JimmyLiJing/BallgownRNAseq.git
 git push -u origin master
 
-
 > pheno_data <- read.table("Huntsman.csv", header=TRUE, colClasses = rep("character", 3))
 > pheno_data = pheno_data[order(pheno_data$ids),]
 
 >pheno_data <- read.table("Huntsman.csv", header=TRUE, colClasses = c("character", "factor","factor"), sep=",")
 
-> bg <- ballgown(dataDir = ".", samplePattern=“DAH”, pData=pheno_data)
-Error: unexpected input in "bg <- ballgown(dataDir = ".", samplePattern=?"
-> bg <- ballgown(dataDir = "ballgown", samplePattern=“DAH”, pData=pheno_data)
-Error: unexpected input in "bg <- ballgown(dataDir = "ballgown", samplePattern=?"
 > bg <- ballgown(dataDir = "ballgown", samplePattern="DAH", pData=pheno_data)
 Thu Sep 14 16:28:02 2017
 Thu Sep 14 16:28:02 2017: Reading linking tables
@@ -27,12 +22,6 @@ Thu Sep 14 16:29:35 2017: Merging transcript data
 Wrapping up the results
 Thu Sep 14 16:29:38 2017
 > 
-> results_transcripts = stattest(bg, feature="transcript",covariate="mutsta",adjustvars = c("population"), getFC=TRUE, meas="FPKM") 
-Coefficients not estimable: populationNon 
-Error in solve.default(t(mod) %*% mod) : 
-  Lapack routine dgesv: system is exactly singular: U[5,5] = 0
-In addition: Warning message:
-Partial NA coefficients for 110829 probe(s) 
 > results_transcripts = stattest(bg, feature="transcript",covariate="mutsta", getFC=TRUE, meas="FPKM") 
 > 
 > results_genes = stattest(bg, feature="gene", covariate="mutsta", getFC=TRUE, meas="FPKM") 
@@ -50,6 +39,10 @@ Partial NA coefficients for 110829 probe(s)
 
 > fpkm = texpr(bg,meas="FPKM")
 > fpkm = log2(fpkm+1)
+
+add gene names into fpkm file
+fpkm = data.frame(geneNames=ballgown::geneNames(bg), geneIDs=ballgown::geneIDs(bg), fpkm)
+
 > boxplot(fpkm,col=as.numeric(pheno_data$mutsta),las=2,ylab='log2(FPKM+1)') 
 Warning message:
 In boxplot.default(groups, ...) : NAs introduced by coercion
