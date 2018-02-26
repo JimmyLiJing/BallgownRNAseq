@@ -1,0 +1,713 @@
+#!/bin/bash
+
+# This tells the scheduler what shell you are using.
+#PBS -S /bin/bash 
+
+# This is the job name.  Feel free to change this at will to whatever you need.
+# It's supposed to be a maximum of 14 characters, but I've used 100 characters successfully.
+#PBS -N pre-hisat2
+
+# This tells the scheduler what account to use.  Do not change. 
+#PBS -A wzou_fluxm
+
+# This denotes the queue that the job should be run in.  Do not change if you want to use the flux dedicated nodes
+#PBS -q fluxm
+
+# This line should not be changed
+#PBS -l qos=flux
+
+# This denotes the number of nodes and processors that the job should be run on. 
+# You should never change the processors per node from the default for the 
+# cluster, unless you only need one or two cores.  The max for ppn is currently 12.
+# You should change walltime as you see fit, find out how much you use, and then add 10-15%. 
+# It is denoted by hh:mm:ss, and hours can be no more than 672 (or 28 days).  
+#PBS -l walltime=182:00:00
+#PBS -l nodes=1:ppn=3
+#PBS -l pmem=24gb
+
+# This denotes the email address to send jobs to
+#PBS -M jingdsli@umich.edu
+
+# This line says (a) send email if the job fails, (b) when the job starts, and (e) when the job ends.
+#PBS -m abe
+
+# This line says to combine the output (o) and error (e) files.
+#PBS -j oe
+
+# This line sends all environment variables on the login node.
+#PBS -V
+
+# This optional line sets up a job array of up to 200 jobs with the same parameters. See How to Use Job Arrays here:
+# http://cac.engin.umich.edu/resources/systems/nyxV2/pbs.html
+# To use an array of input files, make sure you name your input files with a number from 1-200 and reference
+# them with the variable ${PBS_ARRAYID}
+########PBS -t 1-200
+
+# Include the next three lines to see which node(s) your job ran on
+if [ "x${PBS_NODEFILE}" != "x" ] ; then
+   cat $PBS_NODEFILE   # contains a list of the CPUs you were using if run with PBS
+fi
+
+# These lines change to the working directory of the program. Otherwise
+# the script will be run from the users /home directory
+cd $PBS_O_WORKDIR
+echo $PBS_O_WORKDIR
+
+# Your shell script and commands go here.
+date
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt11_Pre_M_hisat2.gtf/Pt11_Pre_M_hisat2.gtf Pt11_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt1_Pre_M_hisat2.gtf/Pt1_Pre_M_hisat2.gtf Pt1_Pre_M_hisat2.bam
+
+fpkm = data.frame(geneNames=ballgown::geneNames(bg), geneIDs=ballgown::geneIDs(bg), fpkm)
+
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt98_Pre/Pt98_Pre_M_hisat2.gtf Pt98_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt94_Pre/Pt94_Pre_M_hisat2.gtf Pt94_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt92_Pre/Pt92_Pre_M_hisat2.gtf Pt92_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt90_Pre/Pt90_Pre_M_hisat2.gtf Pt90_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt82_Pre/Pt82_Pre_M_hisat2.gtf Pt82_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt8_Pre/Pt8_Pre_M_hisat2.gtf Pt8_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt89_Pre/Pt89_Pre_M_hisat2.gtf Pt89_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt10_Pre/Pt10_Pre_M_hisat2.gtf Pt10_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt101_Pre/Pt101_Pre_M_hisat2.gtf Pt101_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt103_Pre/Pt103_Pre_M_hisat2.gtf Pt103_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt106_Pre/Pt106_Pre_M_hisat2.gtf Pt106_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt11_Pre_M_hisat2.gtf/Pt11_Pre_M_hisat2.gtf Pt11_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt17_Pre/Pt17_Pre_M_hisat2.gtf Pt17_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt18_Pre/Pt18_Pre_M_hisat2.gtf Pt18_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt1_Pre_M_hisat2.gtf/Pt1_Pre_M_hisat2.gtf Pt1_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt23_Pre/Pt23_Pre_M_hisat2.gtf Pt23_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt24_Pre/Pt24_Pre_M_hisat2.gtf Pt24_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt26_Pre/Pt26_Pre_M_hisat2.gtf Pt26_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt27_Pre/Pt27_Pre_M_hisat2.gtf Pt27_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt28_Pre/Pt28_Pre_M_hisat2.gtf Pt28_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt29_Pre/Pt29_Pre_M_hisat2.gtf Pt29_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt2_Pre/Pt2_Pre_M_hisat2.gtf Pt2_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt30_Pre/Pt30_Pre_M_hisat2.gtf Pt30_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt31_Pre/Pt31_Pre_M_hisat2.gtf Pt31_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt34_Pre/Pt34_Pre_M_hisat2.gtf Pt34_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt36_Pre/Pt36_Pre_M_hisat2.gtf Pt36_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt37_Pre/Pt37_Pre_M_hisat2.gtf Pt37_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt38_Pre/Pt38_Pre_M_hisat2.gtf Pt38_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt39_Pre/Pt39_Pre_M_hisat2.gtf Pt39_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt3_Pre/Pt3_Pre_M_hisat2.gtf Pt3_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt44_Pre/Pt44_Pre_M_hisat2.gtf Pt44_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt46_Pre/Pt46_Pre_M_hisat2.gtf Pt46_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt47_Pre/Pt47_Pre_M_hisat2.gtf Pt47_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt48_Pre/Pt48_Pre_M_hisat2.gtf Pt48_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt49_Pre/Pt49_Pre_M_hisat2.gtf Pt49_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt4_Pre/Pt4_Pre_M_hisat2.gtf Pt4_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt52_Pre/Pt52_Pre_M_hisat2.gtf Pt52_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt59_Pre/Pt59_Pre_M_hisat2.gtf Pt59_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt5_Pre/Pt5_Pre_M_hisat2.gtf Pt5_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt62_Pre/Pt62_Pre_M_hisat2.gtf Pt62_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt65_Pre/Pt65_Pre_M_hisat2.gtf Pt65_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt66_Pre/Pt66_Pre_M_hisat2.gtf Pt66_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt67_Pre/Pt67_Pre_M_hisat2.gtf Pt67_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt72_Pre/Pt72_Pre_M_hisat2.gtf Pt72_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt76_Pre/Pt76_Pre_M_hisat2.gtf Pt76_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt77_Pre/Pt77_Pre_M_hisat2.gtf Pt77_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt78_Pre/Pt78_Pre_M_hisat2.gtf Pt78_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt79_Pre/Pt79_Pre_M_hisat2.gtf Pt79_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt84_Pre/Pt84_Pre_M_hisat2.gtf Pt84_Pre_M_hisat2.bam
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt85_Pre/Pt85_Pre_M_hisat2.gtf Pt85_Pre_M_hisat2.bam
+
+
+stringtie -e -B -p 8 -G stringtie_merged.gtf -o ballgown/Pt72_Pre/Pt72_Pre_M_hisat2.gtf Pt72_Pre_M_hisat2.bam
+
+
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt9_Pre_M.fq -S Pt9_Pre_M.sam
+samtools sort -@ 8 -o Pt9_Pre_M_hisat2.bam Pt9_Pre_M.sam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt9_Pre_M_hisat2.gtf -l Pt9_Pre_M_hisat2 Pt9_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt98_Pre_M_hisat2.gtf -l Pt98_Pre_M_hisat2 Pt98_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt94_Pre_M_hisat2.gtf -l Pt94_Pre_M_hisat2 Pt94_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt92_Pre_M_hisat2.gtf -l Pt92_Pre_M_hisat2 Pt92_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt90_Pre_M_hisat2.gtf -l Pt90_Pre_M_hisat2 Pt90_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt82_Pre_M_hisat2.gtf -l Pt82_Pre_M_hisat2 Pt82_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt8_Pre_M_hisat2.gtf -l Pt8_Pre_M_hisat2 Pt8_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt89_Pre_M_hisat2.gtf -l Pt89_Pre_M_hisat2 Pt89_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt10_Pre_M_hisat2.gtf -l Pt10_Pre_M_hisat2 Pt10_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt101_Pre_M_hisat2.gtf -l Pt101_Pre_M_hisat2 Pt101_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt103_Pre_M_hisat2.gtf -l Pt103_Pre_M_hisat2 Pt103_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt106_Pre_M_hisat2.gtf -l Pt106_Pre_M_hisat2 Pt106_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt11_Pre_M_hisat2.gtf -l Pt11_Pre_M_hisat2 Pt11_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt17_Pre_M_hisat2.gtf -l Pt17_Pre_M_hisat2 Pt17_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt18_Pre_M_hisat2.gtf -l Pt18_Pre_M_hisat2 Pt18Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt1_Pre_M_hisat2.gtf -l Pt1_Pre_M_hisat2 Pt1_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt23_Pre_M_hisat2.gtf -l Pt23_Pre_M_hisat2 Pt23_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt24_Pre_M_hisat2.gtf -l Pt24_Pre_M_hisat2 Pt24_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt26_Pre_M_hisat2.gtf -l Pt26_Pre_M_hisat2 Pt26_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt27_Pre_M_hisat2.gtf -l Pt27_Pre_M_hisat2 Pt27_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt28_Pre_M_hisat2.gtf -l Pt28_Pre_M_hisat2 Pt28_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt29_Pre_M_hisat2.gtf -l Pt29_Pre_M_hisat2 Pt29_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt2_Pre_M_hisat2.gtf -l Pt2_Pre_M_hisat2 Pt2_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt30_Pre_M_hisat2.gtf -l Pt30_Pre_M_hisat2 Pt30_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt31_Pre_M_hisat2.gtf -l Pt31_Pre_M_hisat2 Pt31_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt34_Pre_M_hisat2.gtf -l Pt34_Pre_M_hisat2 Pt34_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt36_Pre_M_hisat2.gtf -l Pt36_Pre_M_hisat2 Pt36_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt37_Pre_M_hisat2.gtf -l Pt37_Pre_M_hisat2 Pt37_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt38_Pre_M_hisat2.gtf -l Pt38_Pre_M_hisat2 Pt38_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt39_Pre_M_hisat2.gtf -l Pt39_Pre_M_hisat2 Pt39_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt3_Pre_M_hisat2.gtf -l Pt3_Pre_M_hisat2 Pt3_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt44_Pre_M_hisat2.gtf -l Pt44_Pre_M_hisat2 Pt44_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt46_Pre_M_hisat2.gtf -l Pt46_Pre_M_hisat2 Pt46_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt47_Pre_M_hisat2.gtf -l Pt47_Pre_M_hisat2 Pt47_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt48_Pre_M_hisat2.gtf -l Pt48_Pre_M_hisat2 Pt48_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt49_Pre_M_hisat2.gtf -l Pt49_Pre_M_hisat2 Pt49_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt4_Pre_M_hisat2.gtf -l Pt4_Pre_M_hisat2 Pt4_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt52_Pre_M_hisat2.gtf -l Pt52_Pre_M_hisat2 Pt52_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt59_Pre_M_hisat2.gtf -l Pt59_Pre_M_hisat2 Pt59_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt5_Pre_M_hisat2.gtf -l Pt5_Pre_M_hisat2 Pt5_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt62_Pre_M_hisat2.gtf -l Pt62_Pre_M_hisat2 Pt62_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt65_Pre_M_hisat2.gtf -l Pt65_Pre_M_hisat2 Pt65_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt66_Pre_M_hisat2.gtf -l Pt66_Pre_M_hisat2 Pt66_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt67_Pre_M_hisat2.gtf -l Pt67_Pre_M_hisat2 Pt67_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt72_Pre_M_hisat2.gtf -l Pt72_Pre_M_hisat2 Pt72_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt76_Pre_M_hisat2.gtf -l Pt76_Pre_M_hisat2 Pt76_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt77_Pre_M_hisat2.gtf -l Pt77_Pre_M_hisat2 Pt77_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt78_Pre_M_hisat2.gtf -l Pt78_Pre_M_hisat2 Pt78_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt79_Pre_M_hisat2.gtf -l Pt79_Pre_M_hisat2 Pt79_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt84_Pre_M_hisat2.gtf -l Pt84_Pre_M_hisat2 Pt84_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt85_Pre_M_hisat2.gtf -l Pt85_Pre_M_hisat2 Pt85_Pre_M_hisat2.bam
+
+stringtie —merge p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o stringtie_merged.gtf mergelist.txt
+
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt9_Pre_M.fq -S Pt9_Pre_M.sam
+samtools sort -@ 8 -o Pt9_Pre_M_hisat2.bam Pt9_Pre_M.sam
+samtools sort -@ 8 -o Pt98_Pre_M_hisat2.bam Pt98_Pre_M.sam
+samtools sort -@ 8 -o Pt82_Pre_M_hisat2.bam Pt82_Pre_M.sam
+samtools sort -@ 8 -o Pt94_Pre_M_hisat2.bam Pt94_Pre_M.sam
+samtools sort -@ 8 -o Pt92_Pre_M_hisat2.bam Pt92_Pre_M.sam
+samtools sort -@ 8 -o Pt90_Pre_M_hisat2.bam Pt90_Pre_M.sam
+samtools sort -@ 8 -o Pt10_Pre_M_hisat2.bam Pt10_Pre_M.sam
+samtools sort -@ 8 -o Pt101_Pre_M_hisat2.bam Pt101_Pre_M.sam
+samtools sort -@ 8 -o Pt103_Pre_M_hisat2.bam Pt103_Pre_M.sam
+samtools sort -@ 8 -o Pt106_Pre_M_hisat2.bam Pt106_Pre_M.sam
+samtools sort -@ 8 -o Pt8_Pre_M_hisat2.bam Pt8_Pre_M.sam
+samtools sort -@ 8 -o Pt89_Pre_M_hisat2.bam Pt89_Pre_M.sam
+samtools sort -@ 8 -o Pt11_Pre_M_hisat2.bam Pt11_Pre_M.sam
+samtools sort -@ 8 -o Pt17_Pre_M_hisat2.bam Pt17_Pre_M.sam
+samtools sort -@ 8 -o Pt18_Pre_M_hisat2.bam Pt18_Pre_M.sam
+samtools sort -@ 8 -o Pt1_Pre_M_hisat2.bam Pt1_Pre_M.sam
+samtools sort -@ 8 -o Pt23_Pre_M_hisat2.bam Pt23_Pre_M.sam
+samtools sort -@ 8 -o Pt24_Pre_M_hisat2.bam Pt24_Pre_M.sam
+samtools sort -@ 8 -o Pt26_Pre_M_hisat2.bam Pt26_Pre_M.sam
+samtools sort -@ 8 -o Pt27_Pre_M_hisat2.bam Pt27_Pre_M.sam
+samtools sort -@ 8 -o Pt28_Pre_M_hisat2.bam Pt28_Pre_M.sam
+samtools sort -@ 8 -o Pt29_Pre_M_hisat2.bam Pt29_Pre_M.sam
+samtools sort -@ 8 -o Pt2_Pre_M_hisat2.bam Pt2_Pre_M.sam
+samtools sort -@ 8 -o Pt30_Pre_M_hisat2.bam Pt30_Pre_M.sam
+samtools sort -@ 8 -o Pt31_Pre_M_hisat2.bam Pt31_Pre_M.sam
+samtools sort -@ 8 -o Pt34_Pre_M_hisat2.bam Pt34_Pre_M.sam
+samtools sort -@ 8 -o Pt36_Pre_M_hisat2.bam Pt36_Pre_M.sam
+samtools sort -@ 8 -o Pt37_Pre_M_hisat2.bam Pt37_Pre_M.sam
+samtools sort -@ 8 -o Pt38_Pre_M_hisat2.bam Pt38_Pre_M.sam
+samtools sort -@ 8 -o Pt39_Pre_M_hisat2.bam Pt39_Pre_M.sam
+samtools sort -@ 8 -o Pt3_Pre_M_hisat2.bam Pt3_Pre_M.sam
+samtools sort -@ 8 -o Pt44_Pre_M_hisat2.bam Pt44_Pre_M.sam
+samtools sort -@ 8 -o Pt46_Pre_M_hisat2.bam Pt46_Pre_M.sam
+samtools sort -@ 8 -o Pt47_Pre_M_hisat2.bam Pt47_Pre_M.sam
+samtools sort -@ 8 -o Pt48_Pre_M_hisat2.bam Pt48_Pre_M.sam
+samtools sort -@ 8 -o Pt49_Pre_M_hisat2.bam Pt49_Pre_M.sam
+samtools sort -@ 8 -o Pt4_Pre_M_hisat2.bam Pt4_Pre_M.sam
+samtools sort -@ 8 -o Pt52_Pre_M_hisat2.bam Pt52_Pre_M.sam
+samtools sort -@ 8 -o Pt59_Pre_M_hisat2.bam Pt59_Pre_M.sam
+samtools sort -@ 8 -o Pt5_Pre_M_hisat2.bam Pt5_Pre_M.sam
+samtools sort -@ 8 -o Pt62_Pre_M_hisat2.bam Pt62_Pre_M.sam
+samtools sort -@ 8 -o Pt65_Pre_M_hisat2.bam Pt65_Pre_M.sam
+samtools sort -@ 8 -o Pt66_Pre_M_hisat2.bam Pt66_Pre_M.sam
+samtools sort -@ 8 -o Pt67_Pre_M_hisat2.bam Pt67_Pre_M.sam
+samtools sort -@ 8 -o Pt72_Pre_M_hisat2.bam Pt72_Pre_M.sam
+samtools sort -@ 8 -o Pt76_Pre_M_hisat2.bam Pt76_Pre_M.sam
+samtools sort -@ 8 -o Pt77_Pre_M_hisat2.bam Pt77_Pre_M.sam
+samtools sort -@ 8 -o Pt78_Pre_M_hisat2.bam Pt78_Pre_M.sam
+samtools sort -@ 8 -o Pt79_Pre_M_hisat2.bam Pt79_Pre_M.sam
+samtools sort -@ 8 -o Pt84_Pre_M_hisat2.bam Pt84_Pre_M.sam
+samtools sort -@ 8 -o Pt85_Pre_M_hisat2.bam Pt85_Pre_M.sam
+
+
+
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt98_Pre_M.fq -S Pt98_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt82_Pre_M.fq -S Pt82_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt94_Pre_M.fq -S Pt94_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt92_Pre_M.fq -S Pt92_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt90_Pre_M.fq -S Pt90_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt10_Pre_M.fq -S Pt10_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt101_Pre_M.fq -S Pt101_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt103_Pre_M.fq -S Pt103_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt106_Pre_M.fq -S Pt106_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt8_Pre_M.fq -S Pt8_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt89_Pre_M.fq -S Pt89_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt11_Pre_M.fq -S Pt11_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt17_Pre_M.fq -S Pt17_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt18_Pre_M.fq -S Pt18_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt1_Pre_M.fq -S Pt1_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt23_Pre_M.fq -S Pt23_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt24_Pre_M.fq -S Pt24_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt26_Pre_M.fq -S Pt26_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt27_Pre_M.fq -S Pt27_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt28_Pre_M.fq -S Pt28_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt29_Pre_M.fq -S Pt29_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt2_Pre_M.fq -S Pt2_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt30_Pre_M.fq -S Pt30_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt31_Pre_M.fq -S Pt31_Pre_M.sam 
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt34_Pre_M.fq -S Pt34_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt36_Pre_M.fq -S Pt36_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt37_Pre_M.fq -S Pt37_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt38_Pre_M.fq -S Pt38_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt39_Pre_M.fq -S Pt39_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt3_Pre_M.fq -S Pt3_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt44_Pre_M.fq -S Pt44_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt46_Pre_M.fq -S Pt46_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt47_Pre_M.fq -S Pt47_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt48_Pre_M.fq -S Pt48_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt49_Pre_M.fq -S Pt49_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt4_Pre_M.fq -S Pt4_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt52_Pre_M.fq  -S Pt52_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt59_Pre_M.fq -S Pt59_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt5_Pre_M.fq -S Pt5_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt62_Pre_M.fq -S Pt62_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt65_Pre_M.fq -S Pt65_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt66_Pre_M.fq -S Pt66_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt67_Pre_M.fq -S Pt67_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt72_Pre_M.fq -S Pt72_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt76_Pre_M.fq -S Pt76_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt77_Pre_M.fq -S Pt77_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt78_Pre_M.fq -S Pt78_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt79_Pre_M.fq -S Pt79_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt84_Pre_M.fq -S Pt84_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt85_Pre_M.fq -S Pt85_Pre_M.sam
+
+samtools sort -@ 8 -o Pt9_Pre_M_hisat2.bam Pt9_Pre_M.sam
+samtools sort -@ 8 -o Pt98_Pre_M_hisat2.bam Pt98_Pre_M.sam
+samtools sort -@ 8 -o Pt82_Pre_M_hisat2.bam Pt82_Pre_M.sam
+samtools sort -@ 8 -o Pt94_Pre_M_hisat2.bam Pt94_Pre_M.sam
+samtools sort -@ 8 -o Pt92_Pre_M_hisat2.bam Pt92_Pre_M.sam
+samtools sort -@ 8 -o Pt90_Pre_M_hisat2.bam Pt90_Pre_M.sam
+samtools sort -@ 8 -o Pt10_Pre_M_hisat2.bam Pt10_Pre_M.sam
+samtools sort -@ 8 -o Pt101_Pre_M_hisat2.bam Pt101_Pre_M.sam
+samtools sort -@ 8 -o Pt103_Pre_M_hisat2.bam Pt103_Pre_M.sam
+samtools sort -@ 8 -o Pt106_Pre_M_hisat2.bam Pt106_Pre_M.sam
+samtools sort -@ 8 -o Pt8_Pre_M_hisat2.bam Pt8_Pre_M.sam
+samtools sort -@ 8 -o Pt89_Pre_M_hisat2.bam Pt89_Pre_M.sam
+samtools sort -@ 8 -o Pt11_Pre_M_hisat2.bam Pt11_Pre_M.sam
+samtools sort -@ 8 -o Pt17_Pre_M_hisat2.bam Pt17_Pre_M.sam
+samtools sort -@ 8 -o Pt18_Pre_M_hisat2.bam Pt18_Pre_M.sam
+samtools sort -@ 8 -o Pt1_Pre_M_hisat2.bam Pt1_Pre_M.sam
+samtools sort -@ 8 -o Pt23_Pre_M_hisat2.bam Pt23_Pre_M.sam
+samtools sort -@ 8 -o Pt24_Pre_M_hisat2.bam Pt24_Pre_M.sam
+samtools sort -@ 8 -o Pt26_Pre_M_hisat2.bam Pt26_Pre_M.sam
+samtools sort -@ 8 -o Pt27_Pre_M_hisat2.bam Pt27_Pre_M.sam
+samtools sort -@ 8 -o Pt28_Pre_M_hisat2.bam Pt28_Pre_M.sam
+samtools sort -@ 8 -o Pt29_Pre_M_hisat2.bam Pt29_Pre_M.sam
+samtools sort -@ 8 -o Pt2_Pre_M_hisat2.bam Pt2_Pre_M.sam
+samtools sort -@ 8 -o Pt30_Pre_M_hisat2.bam Pt30_Pre_M.sam
+samtools sort -@ 8 -o Pt31_Pre_M_hisat2.bam Pt31_Pre_M.sam
+samtools sort -@ 8 -o Pt34_Pre_M_hisat2.bam Pt34_Pre_M.sam
+samtools sort -@ 8 -o Pt36_Pre_M_hisat2.bam Pt36_Pre_M.sam
+samtools sort -@ 8 -o Pt37_Pre_M_hisat2.bam Pt37_Pre_M.sam
+samtools sort -@ 8 -o Pt38_Pre_M_hisat2.bam Pt38_Pre_M.sam
+samtools sort -@ 8 -o Pt39_Pre_M_hisat2.bam Pt39_Pre_M.sam
+samtools sort -@ 8 -o Pt3_Pre_M_hisat2.bam Pt3_Pre_M.sam
+samtools sort -@ 8 -o Pt44_Pre_M_hisat2.bam Pt44_Pre_M.sam
+samtools sort -@ 8 -o Pt46_Pre_M_hisat2.bam Pt46_Pre_M.sam
+samtools sort -@ 8 -o Pt47_Pre_M_hisat2.bam Pt47_Pre_M.sam
+samtools sort -@ 8 -o Pt48_Pre_M_hisat2.bam Pt48_Pre_M.sam
+samtools sort -@ 8 -o Pt49_Pre_M_hisat2.bam Pt49_Pre_M.sam
+samtools sort -@ 8 -o Pt4_Pre_M_hisat2.bam Pt4_Pre_M.sam
+samtools sort -@ 8 -o Pt52_Pre_M_hisat2.bam Pt52_Pre_M.sam
+samtools sort -@ 8 -o Pt59_Pre_M_hisat2.bam Pt59_Pre_M.sam
+samtools sort -@ 8 -o Pt5_Pre_M_hisat2.bam Pt5_Pre_M.sam
+samtools sort -@ 8 -o Pt62_Pre_M_hisat2.bam Pt62_Pre_M.sam
+samtools sort -@ 8 -o Pt65_Pre_M_hisat2.bam Pt65_Pre_M.sam
+samtools sort -@ 8 -o Pt66_Pre_M_hisat2.bam Pt66_Pre_M.sam
+samtools sort -@ 8 -o Pt67_Pre_M_hisat2.bam Pt67_Pre_M.sam
+samtools sort -@ 8 -o Pt72_Pre_M_hisat2.bam Pt72_Pre_M.sam
+samtools sort -@ 8 -o Pt76_Pre_M_hisat2.bam Pt76_Pre_M.sam
+samtools sort -@ 8 -o Pt77_Pre_M_hisat2.bam Pt77_Pre_M.sam
+samtools sort -@ 8 -o Pt78_Pre_M_hisat2.bam Pt78_Pre_M.sam
+samtools sort -@ 8 -o Pt79_Pre_M_hisat2.bam Pt79_Pre_M.sam
+samtools sort -@ 8 -o Pt84_Pre_M_hisat2.bam Pt84_Pre_M.sam
+samtools sort -@ 8 -o Pt85_Pre_M_hisat2.bam Pt85_Pre_M.sam
+
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt9_Pre_M.fq -S Pt9_Pre_M.sam
+samtools sort -@ 8 -o Pt9_Pre_M_hisat2.bam Pt9_Pre_M.sam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt9_Pre_M_hisat2.gtf -l Pt9_Pre_M_hisat2 Pt9_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt98_Pre_M_hisat2.gtf -l Pt98_Pre_M_hisat2 Pt98_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt94_Pre_M_hisat2.gtf -l Pt94_Pre_M_hisat2 Pt94_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt92_Pre_M_hisat2.gtf -l Pt92_Pre_M_hisat2 Pt92_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt90_Pre_M_hisat2.gtf -l Pt90_Pre_M_hisat2 Pt90_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt82_Pre_M_hisat2.gtf -l Pt82_Pre_M_hisat2 Pt82_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt8_Pre_M_hisat2.gtf -l Pt8_Pre_M_hisat2 Pt8_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt89_Pre_M_hisat2.gtf -l Pt89_Pre_M_hisat2 Pt89_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt10_Pre_M_hisat2.gtf -l Pt10_Pre_M_hisat2 Pt10_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt101_Pre_M_hisat2.gtf -l Pt101_Pre_M_hisat2 Pt101_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt103_Pre_M_hisat2.gtf -l Pt103_Pre_M_hisat2 Pt103_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt106_Pre_M_hisat2.gtf -l Pt106_Pre_M_hisat2 Pt106_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt11_Pre_M_hisat2.gtf -l Pt11_Pre_M_hisat2 Pt11_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt17_Pre_M_hisat2.gtf -l Pt17_Pre_M_hisat2 Pt17_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt18_Pre_M_hisat2.gtf -l Pt18_Pre_M_hisat2 Pt18Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt1_Pre_M_hisat2.gtf -l Pt1_Pre_M_hisat2 Pt1_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt23_Pre_M_hisat2.gtf -l Pt23_Pre_M_hisat2 Pt23_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt24_Pre_M_hisat2.gtf -l Pt24_Pre_M_hisat2 Pt24_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt26_Pre_M_hisat2.gtf -l Pt26_Pre_M_hisat2 Pt26_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt27_Pre_M_hisat2.gtf -l Pt27_Pre_M_hisat2 Pt27_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt28_Pre_M_hisat2.gtf -l Pt28_Pre_M_hisat2 Pt28_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt29_Pre_M_hisat2.gtf -l Pt29_Pre_M_hisat2 Pt29_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt2_Pre_M_hisat2.gtf -l Pt2_Pre_M_hisat2 Pt2_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt30_Pre_M_hisat2.gtf -l Pt30_Pre_M_hisat2 Pt30_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt31_Pre_M_hisat2.gtf -l Pt31_Pre_M_hisat2 Pt31_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt34_Pre_M_hisat2.gtf -l Pt34_Pre_M_hisat2 Pt34_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt36_Pre_M_hisat2.gtf -l Pt36_Pre_M_hisat2 Pt36_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt37_Pre_M_hisat2.gtf -l Pt37_Pre_M_hisat2 Pt37_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt38_Pre_M_hisat2.gtf -l Pt38_Pre_M_hisat2 Pt38_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt39_Pre_M_hisat2.gtf -l Pt39_Pre_M_hisat2 Pt39_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt3_Pre_M_hisat2.gtf -l Pt3_Pre_M_hisat2 Pt3_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt44_Pre_M_hisat2.gtf -l Pt44_Pre_M_hisat2 Pt44_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt46_Pre_M_hisat2.gtf -l Pt46_Pre_M_hisat2 Pt46_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt47_Pre_M_hisat2.gtf -l Pt47_Pre_M_hisat2 Pt47_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt48_Pre_M_hisat2.gtf -l Pt48_Pre_M_hisat2 Pt48_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt49_Pre_M_hisat2.gtf -l Pt49_Pre_M_hisat2 Pt49_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt4_Pre_M_hisat2.gtf -l Pt4_Pre_M_hisat2 Pt4_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt52_Pre_M_hisat2.gtf -l Pt52_Pre_M_hisat2 Pt52_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt59_Pre_M_hisat2.gtf -l Pt59_Pre_M_hisat2 Pt59_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt5_Pre_M_hisat2.gtf -l Pt5_Pre_M_hisat2 Pt5_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt62_Pre_M_hisat2.gtf -l Pt62_Pre_M_hisat2 Pt62_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt65_Pre_M_hisat2.gtf -l Pt65_Pre_M_hisat2 Pt65_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt66_Pre_M_hisat2.gtf -l Pt66_Pre_M_hisat2 Pt66_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt67_Pre_M_hisat2.gtf -l Pt67_Pre_M_hisat2 Pt67_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt72_Pre_M_hisat2.gtf -l Pt72_Pre_M_hisat2 Pt72_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt76_Pre_M_hisat2.gtf -l Pt76_Pre_M_hisat2 Pt76_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt77_Pre_M_hisat2.gtf -l Pt77_Pre_M_hisat2 Pt77_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt78_Pre_M_hisat2.gtf -l Pt78_Pre_M_hisat2 Pt78_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt79_Pre_M_hisat2.gtf -l Pt79_Pre_M_hisat2 Pt79_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt84_Pre_M_hisat2.gtf -l Pt84_Pre_M_hisat2 Pt84_Pre_M_hisat2.bam
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o Pt85_Pre_M_hisat2.gtf -l Pt85_Pre_M_hisat2 Pt85_Pre_M_hisat2.bam
+
+
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U SRR5229443.fastq -S SRR5229443.sam
+
+samtools sort -@ 8 -o SRR5229450.bam SRR5229450.sam
+
+stringtie -p 8 -G /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/hg38_ucsc.annotated.gtf -o SRR5229443.gtf -l SRR5229443 SRR5229443.bam
+
+Pt9_Pre_M_hisat2.gtf
+Pt98_Pre_M_hisat2.gtf
+Pt94_Pre_M_hisat2.gtf
+Pt92_Pre_M_hisat2.gtf
+Pt90_Pre_M_hisat2.gtf
+Pt82_Pre_M_hisat2.gtf
+Pt8_Pre_M_hisat2.gtf
+Pt89_Pre_M_hisat2.gtf
+Pt10_Pre_M_hisat2.gtf
+Pt101_Pre_M_hisat2.gtf
+Pt103_Pre_M_hisat2.gtf
+Pt106_Pre_M_hisat2.gtf
+Pt11_Pre_M_hisat2.gtf
+Pt17_Pre_M_hisat2.gtf
+Pt18_Pre_M_hisat2.gtf
+Pt1_Pre_M_hisat2.gtf
+Pt23_Pre_M_hisat2.gtf
+Pt24_Pre_M_hisat2.gtf
+Pt26_Pre_M_hisat2.gtf
+Pt27_Pre_M_hisat2.gtf
+Pt28_Pre_M_hisat2.gtf
+Pt29_Pre_M_hisat2.gtf
+Pt2_Pre_M_hisat2.gtf
+Pt30_Pre_M_hisat2.gtf
+Pt31_Pre_M_hisat2.gtf
+Pt34_Pre_M_hisat2.gtf
+Pt36_Pre_M_hisat2.gtf
+Pt37_Pre_M_hisat2.gtf
+Pt38_Pre_M_hisat2.gtf
+Pt39_Pre_M_hisat2.gtf
+Pt3_Pre_M_hisat2.gtf
+Pt44_Pre_M_hisat2.gtf
+Pt46_Pre_M_hisat2.gtf
+Pt47_Pre_M_hisat2.gtf
+Pt48_Pre_M_hisat2.gtf
+Pt49_Pre_M_hisat2.gtf
+Pt4_Pre_M_hisat2.gtf
+Pt52_Pre_M_hisat2.gtf
+Pt59_Pre_M_hisat2.gtf
+Pt5_Pre_M_hisat2.gtf
+Pt62_Pre_M_hisat2.gtf
+Pt65_Pre_M_hisat2.gtf
+Pt66_Pre_M_hisat2.gtf
+Pt67_Pre_M_hisat2.gtf
+Pt72_Pre_M_hisat2.gtf
+Pt76_Pre_M_hisat2.gtf
+Pt77_Pre_M_hisat2.gtf
+Pt78_Pre_M_hisat2.gtf
+Pt79_Pre_M_hisat2.gtf
+Pt84_Pre_M_hisat2.gtf
+Pt85_Pre_M_hisat2.gtf
+
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt9_Pre_M.fq -S Pt9_Pre_M.sam
+
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt98_Pre_M.fq -S Pt98_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt82_Pre_M.fq -S Pt82_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt94_Pre_M.fq -S Pt94_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt92_Pre_M.fq -S Pt92_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt90_Pre_M.fq -S Pt90_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt10_Pre_M.fq -S Pt10_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt101_Pre_M.fq -S Pt101_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt103_Pre_M.fq -S Pt103_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt106_Pre_M.fq -S Pt106_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt8_Pre_M.fq -S Pt8_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt89_Pre_M.fq -S Pt89_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt11_Pre_M.fq -S Pt11_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt17_Pre_M.fq -S Pt17_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt18_Pre_M.fq -S Pt18_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt1_Pre_M.fq -S Pt1_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt23_Pre_M.fq -S Pt23_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt24_Pre_M.fq -S Pt24_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt26_Pre_M.fq -S Pt26_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt27_Pre_M.fq -S Pt27_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt28_Pre_M.fq -S Pt28_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt29_Pre_M.fq -S Pt29_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt2_Pre_M.fq -S Pt2_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt30_Pre_M.fq -S Pt30_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt31_Pre_M.fq -S Pt31_Pre_M.sam 
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt34_Pre_M.fq -S Pt34_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt36_Pre_M.fq -S Pt36_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt37_Pre_M.fq -S Pt37_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt38_Pre_M.fq -S Pt38_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt39_Pre_M.fq -S Pt39_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt3_Pre_M.fq -S Pt3_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt44_Pre_M.fq -S Pt44_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt46_Pre_M.fq -S Pt46_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt47_Pre_M.fq -S Pt47_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt48_Pre_M.fq -S Pt48_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt49_Pre_M.fq -S Pt49_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt4_Pre_M.fq -S Pt4_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt52_Pre_M.fq  -S Pt52_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt59_Pre_M.fq -S Pt59_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt5_Pre_M.fq -S Pt5_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt62_Pre_M.fq -S Pt62_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt65_Pre_M.fq -S Pt65_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt66_Pre_M.fq -S Pt66_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt67_Pre_M.fq -S Pt67_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt72_Pre_M.fq -S Pt72_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt76_Pre_M.fq -S Pt76_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt77_Pre_M.fq -S Pt77_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt78_Pre_M.fq -S Pt78_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt79_Pre_M.fq -S Pt79_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt84_Pre_M.fq -S Pt84_Pre_M.sam
+hisat2 -p 8 --dta -x /scratch/wzou_fluxm/jingdsli/HISAT2/hg38_tran2/hg38_tran/genome_tran -U Pt85_Pre_M.fq -S Pt85_Pre_M.sam
+
+
+samtools sort -n Pt9_Pre_E9021024-6.Aligned.sortedByCoord.out.bam -o Pt9_Pre.bam
+samtools sort -n Pt82_Pre_AD823914-8.Aligned.sortedByCoord.out.bam -o Pt82_Pre.bam
+bedtools bamtofastq -i Pt9_Pre.bam -fq Pt9_Pre_M.fq
+bedtools bamtofastq -i Pt82_Pre.bam -fq Pt82_Pre_M.fq
+bedtools bamtofastq -i Pt98_Pre_AD733586-8.Aligned.sorted.out.bam -fq Pt98_Pre_M.fq
+bedtools bamtofastq -i Pt10_Pre_E9047565-6.Aligned.sorted.out.bam -fq Pt10_Pre_M.fq
+bedtools bamtofastq -i Pt101_Pre_AD486328-5.Aligned.sorted.out.bam -fq Pt101_Pre_M.fq
+bedtools bamtofastq -i Pt103_Pre_AE134058-2.Aligned.sorted.out.bam -fq Pt103_Pre_M.fq
+bedtools bamtofastq -i Pt106_Pre_AD502250-5.Aligned.sorted.out.bam -fq Pt106_Pre_M.fq
+bedtools bamtofastq -i Pt94_Pre_AD732850-6.Aligned.sorted.out.bam -fq Pt94_Pre_M.fq
+bedtools bamtofastq -i Pt92_Pre_AE134060-5.Aligned.sorted.out.bam -fq Pt92_Pre_M.fq
+bedtools bamtofastq -i Pt90_Pre_AD467873-6.Aligned.sorted.out.bam -fq Pt90_Pre_M.fq
+bedtools bamtofastq -i Pt8_Pre_AD153354-6.Aligned.sorted.out.bam -fq Pt8_Pre_M.fq
+bedtools bamtofastq -i Pt89_Pre_AE070951-5.Aligned.sorted.out.bam -fq Pt89_Pre_M.fq
+bedtools bamtofastq -i Pt11_Pre.bam -fq Pt11_Pre_M.fq
+bedtools bamtofastq -i Pt17_Pre.bam -fq Pt17_Pre_M.fq
+bedtools bamtofastq -i Pt18_Pre.bam -fq Pt18_Pre_M.fq
+bedtools bamtofastq -i Pt1_Pre.bam -fq Pt1_Pre_M.fq
+bedtools bamtofastq -i Pt23_Pre.bam -fq Pt23_Pre_M.fq
+bedtools bamtofastq -i Pt24_Pre.bam -fq Pt24_Pre_M.fq
+bedtools bamtofastq -i Pt26_Pre.bam -fq Pt26_Pre_M.fq
+bedtools bamtofastq -i Pt27_Pre.bam -fq Pt27_Pre_M.fq
+bedtools bamtofastq -i Pt28_Pre.bam -fq Pt28_Pre_M.fq
+bedtools bamtofastq -i Pt29_Pre.bam -fq Pt29_Pre_M.fq
+bedtools bamtofastq -i Pt2_Pre.bam -fq Pt2_Pre_M.fq
+bedtools bamtofastq -i Pt30_Pre.bam -fq Pt30_Pre_M.fq
+bedtools bamtofastq -i Pt31_Pre.bam -fq Pt31_Pre_M.fq
+bedtools bamtofastq -i Pt34_Pre.bam -fq Pt34_Pre_M.fq
+bedtools bamtofastq -i Pt36_Pre.bam -fq Pt36_Pre_M.fq
+bedtools bamtofastq -i Pt37_Pre.bam -fq Pt37_Pre_M.fq
+bedtools bamtofastq -i Pt38_Pre.bam -fq Pt38_Pre_M.fq
+bedtools bamtofastq -i Pt39_Pre.bam -fq Pt39_Pre_M.fq
+bedtools bamtofastq -i Pt3_Pre.bam -fq Pt3_Pre_M.fq
+bedtools bamtofastq -i Pt44_Pre.bam -fq Pt44_Pre_M.fq
+bedtools bamtofastq -i Pt46_Pre.bam -fq Pt46_Pre_M.fq
+bedtools bamtofastq -i Pt47_Pre.bam -fq Pt47_Pre_M.fq
+bedtools bamtofastq -i Pt48_Pre.bam -fq Pt48_Pre_M.fq
+bedtools bamtofastq -i Pt49_Pre.bam -fq Pt49_Pre_M.fq
+bedtools bamtofastq -i Pt4_Pre.bam -fq Pt4_Pre_M.fq
+bedtools bamtofastq -i Pt52_Pre.bam -fq Pt52_Pre_M.fq
+bedtools bamtofastq -i Pt59_Pre.bam -fq Pt59_Pre_M.fq
+bedtools bamtofastq -i Pt5_Pre.bam -fq Pt5_Pre_M.fq
+bedtools bamtofastq -i Pt62_Pre.bam -fq Pt62_Pre_M.fq
+bedtools bamtofastq -i Pt65_Pre.bam -fq Pt65_Pre_M.fq
+bedtools bamtofastq -i Pt66_Pre.bam -fq Pt66_Pre_M.fq
+bedtools bamtofastq -i Pt67_Pre.bam -fq Pt67_Pre_M.fq
+bedtools bamtofastq -i Pt72_Pre.bam -fq Pt72_Pre_M.fq
+bedtools bamtofastq -i Pt76_Pre.bam -fq Pt76_Pre_M.fq
+bedtools bamtofastq -i Pt77_Pre.bam -fq Pt77_Pre_M.fq
+bedtools bamtofastq -i Pt78_Pre.bam -fq Pt78_Pre_M.fq
+bedtools bamtofastq -i Pt79_Pre.bam -fq Pt79_Pre_M.fq
+bedtools bamtofastq -i Pt82_Pre.bam -fq Pt82_Pre_M.fq
+bedtools bamtofastq -i Pt84_Pre.bam -fq Pt84_Pre_M.fq
+bedtools bamtofastq -i Pt85_Pre.am -fq Pt85_Pre_M.fq
+
+
+
+samtools sort -n Pt101_Pre_AD486328-5.Aligned.sortedByCoord.out.bam -o Pt101_Pre_AD486328-5.Aligned.sorted.out.bam 
+samtools sort -n Pt103_Pre_AE134058-2.Aligned.sortedByCoord.out.bam -o Pt103_Pre_AE134058-2.Aligned.sorted.out.bam
+samtools sort -n Pt106_Pre_AD502250-5.Aligned.sortedByCoord.out.bam -o Pt106_Pre_AD502250-5.Aligned.sorted.out.bam 
+samtools sort -n Pt94_Pre_AD732850-6.Aligned.sortedByCoord.out.bam -o Pt94_Pre_AD732850-6.Aligned.sorted.out.bam
+samtools sort -n Pt92_Pre_AE134060-5.Aligned.sortedByCoord.out.bam -o Pt92_Pre_AE134060-5.Aligned.sorted.out.bam
+samtools sort -n Pt90_Pre_AD467873-6.Aligned.sortedByCoord.out.bam -o Pt90_Pre_AD467873-6.Aligned.sorted.out.bam
+samtools sort -n Pt8_Pre_AD153354-6.Aligned.sortedByCoord.out.bam -o Pt8_Pre_AD153354-6.Aligned.sorted.out.bam
+samtools sort -n Pt89_Pre_AE070951-5.Aligned.sortedByCoord.out.bam -o Pt89_Pre_AE070951-5.Aligned.sorted.out.bam
+samtools sort -n  Pt11_Pre_AD153352-6.Aligned.sortedByCoord.out.bam -o Pt11_Pre.bam
+samtools sort -n Pt17_Pre_E9047563-6.Aligned.sortedByCoord.out.bam -o Pt17_Pre.bam
+samtools sort -n Pt18_Pre_E9024732-6.Aligned.sortedByCoord.out.bam -o Pt18_Pre.bam
+samtools sort -n Pt1_Pre_AD101148-6.Aligned.sortedByCoord.out.bam -o Pt1_Pre.bam
+samtools sort -n Pt23_Pre_AD313075-5.Aligned.sortedByCoord.out.bam -o Pt23_Pre.bam
+samtools sort -n Pt24_Pre_AD436687-5.Aligned.sortedByCoord.out.bam -o Pt24_Pre.bam
+samtools sort -n Pt26_Pre_AD467789-6.Aligned.sortedByCoord.out.bam -o Pt26_Pre.bam
+samtools sort -n Pt27_Pre_AD453873-5.Aligned.sortedByCoord.out.bam -o Pt27_Pre.bam
+samtools sort -n Pt28_Pre_AD297619-6.Aligned.sortedByCoord.out.bam -o Pt28_Pre.bam
+samtools sort -n Pt29_Pre_AD497504-5.Aligned.sortedByCoord.out.bam -o Pt29_Pre.bam
+samtools sort -n Pt2_Pre_AD101150-6.Aligned.sortedByCoord.out.bam -o Pt2_Pre.bam
+samtools sort -n Pt30_Pre_AD497503-5.Aligned.sortedByCoord.out.bam -o Pt30_Pre.bam
+samtools sort -n Pt31_Pre_AD453872-5.Aligned.sortedByCoord.out.bam -o Pt31_Pre.bam
+samtools sort -n Pt34_Pre_AD466985-6.Aligned.sortedByCoord.out.bam -o Pt34_Pre.bam
+samtools sort -n Pt36_Pre_AD467095-6.Aligned.sortedByCoord.out.bam -o Pt36_Pre.bam
+samtools sort -n Pt37_Pre_AD502452-5.Aligned.sortedByCoord.out.bam -o Pt37_Pre.bam
+samtools sort -n Pt38_Pre_E9200719-6.Aligned.sortedByCoord.out.bam -o Pt38_Pre.bam
+samtools sort -n Pt39_Pre_AD485899-5.Aligned.sortedByCoord.out.bam -o Pt39_Pre.bam
+samtools sort -n Pt3_Pre_E9024733-3.Aligned.sortedByCoord.out.bam -o Pt3_Pre.bam
+samtools sort -n Pt44_Pre_AD467790-6.Aligned.sortedByCoord.out.bam -o Pt44_Pre.bam
+samtools sort -n Pt46_Pre_AD467096-6.Aligned.sortedByCoord.out.bam -o Pt46_Pre.bam
+samtools sort -n Pt47_Pre_AD506073-6.Aligned.sortedByCoord.out.bam -o Pt47_Pre.bam
+samtools sort -n Pt48_Pre_E9047561-7.Aligned.sortedByCoord.out.bam -o Pt48_Pre.bam
+samtools sort -n Pt49_Pre_AD667851-6.Aligned.sortedByCoord.out.bam -o Pt49_Pre.bam
+samtools sort -n Pt4_Pre_E9021023-6.Aligned.sortedByCoord.out.bam -o Pt4_Pre.bam
+samtools sort -n Pt52_Pre_AD506075-6.Aligned.sortedByCoord.out.bam -o Pt52_Pre.bam
+samtools sort -n Pt59_Pre_AD823915-5.Aligned.sortedByCoord.out.bam -o Pt59_Pre.bam
+samtools sort -n Pt5_Pre_E9021022-6.Aligned.sortedByCoord.out.bam -o Pt5_Pre.bam
+samtools sort -n Pt62_Pre_AD608303-5.Aligned.sortedByCoord.out.bam -o Pt62_Pre.bam
+samtools sort -n Pt65_Pre_AD793919-6.Aligned.sortedByCoord.out.bam -o Pt65_Pre.bam
+samtools sort -n Pt66_Pre_AD667850-6.Aligned.sortedByCoord.out.bam -o Pt66_Pre.bam
+samtools sort -n Pt67_Pre_AD506074-6.Aligned.sortedByCoord.out.bam -o Pt67_Pre.bam
+samtools sort -n Pt72_Pre_AD793922-5.Aligned.sortedByCoord.out.bam -o Pt72_Pre.bam
+samtools sort -n Pt76_Pre_AD667852-6.Aligned.sortedByCoord.out.bam -o Pt76_Pre.bam
+samtools sort -n Pt77_Pre_AD733591-7.Aligned.sortedByCoord.out.bam -o Pt77_Pre.bam
+samtools sort -n Pt78_Pre_AD467018-5.Aligned.sortedByCoord.out.bam -o Pt78_Pre.bam
+samtools sort -n Pt79_Pre_AD733587-5.Aligned.sortedByCoord.out.bam -o Pt79_Pre.bam
+samtools sort -n Pt82_Pre_AD823914-8.Aligned.sortedByCoord.out.bam -o Pt82_Pre.bam
+samtools sort -n Pt84_Pre_AD486532-5.Aligned.sortedByCoord.out.bam -o Pt84_Pre.bam
+samtools sort -n Pt85_Pre_AD486329-5.Aligned.sortedByCoord.out.bam -o Pt85_Pre.am
+
+
+
+bedtools bamtofastq -i Pt11_Pre_AD153352-6.Aligned.sortedByCoord.out.bam -fq Pt11_Pre.fq
+bedtools bamtofastq -i Pt17_Pre_E9047563-6.Aligned.sortedByCoord.out.bam -fq Pt17_Pre.fq
+bedtools bamtofastq -i Pt18_Pre_E9024732-6.Aligned.sortedByCoord.out.bam -fq Pt18_Pre.fq
+bedtools bamtofastq -i Pt1_Pre_AD101148-6.Aligned.sortedByCoord.out.bam -fq Pt1_Pre.fq
+bedtools bamtofastq -i Pt23_Pre_AD313075-5.Aligned.sortedByCoord.out.bam -fq Pt23_Pre.fq
+bedtools bamtofastq -i Pt24_Pre_AD436687-5.Aligned.sortedByCoord.out.bam -fq Pt24_Pre.fq
+bedtools bamtofastq -i Pt26_Pre_AD467789-6.Aligned.sortedByCoord.out.bam -fq Pt26_Pre.fq
+bedtools bamtofastq -i Pt27_Pre_AD453873-5.Aligned.sortedByCoord.out.bam -fq Pt27_Pre.fq
+bedtools bamtofastq -i Pt28_Pre_AD297619-6.Aligned.sortedByCoord.out.bam -fq Pt28_Pre.fq
+bedtools bamtofastq -i Pt29_Pre_AD497504-5.Aligned.sortedByCoord.out.bam -fq Pt29_Pre.fq
+bedtools bamtofastq -i Pt2_Pre_AD101150-6.Aligned.sortedByCoord.out.bam -fq Pt2_Pre.fq
+bedtools bamtofastq -i Pt30_Pre_AD497503-5.Aligned.sortedByCoord.out.bam -fq Pt30_Pre.fq
+bedtools bamtofastq -i Pt31_Pre_AD453872-5.Aligned.sortedByCoord.out.bam -fq Pt31_Pre.fq
+bedtools bamtofastq -i Pt34_Pre_AD466985-6.Aligned.sortedByCoord.out.bam -fq Pt34_Pre.fq
+bedtools bamtofastq -i Pt36_Pre_AD467095-6.Aligned.sortedByCoord.out.bam -fq Pt36_Pre.fq
+bedtools bamtofastq -i Pt37_Pre_AD502452-5.Aligned.sortedByCoord.out.bam -fq Pt37_Pre.fq
+bedtools bamtofastq -i Pt38_Pre_E9200719-6.Aligned.sortedByCoord.out.bam -fq Pt38_Pre.fq
+bedtools bamtofastq -i Pt39_Pre_AD485899-5.Aligned.sortedByCoord.out.bam -fq Pt39_Pre.fq
+bedtools bamtofastq -i Pt3_Pre_E9024733-3.Aligned.sortedByCoord.out.bam -fq Pt3_Pre.fq
+bedtools bamtofastq -i Pt44_Pre_AD467790-6.Aligned.sortedByCoord.out.bam -fq Pt44_Pre.fq
+bedtools bamtofastq -i Pt46_Pre_AD467096-6.Aligned.sortedByCoord.out.bam -fq Pt46_Pre.fq
+bedtools bamtofastq -i Pt47_Pre_AD506073-6.Aligned.sortedByCoord.out.bam -fq Pt47_Pre.fq
+bedtools bamtofastq -i Pt48_Pre_E9047561-7.Aligned.sortedByCoord.out.bam -fq Pt48_Pre.fq
+bedtools bamtofastq -i Pt49_Pre_AD667851-6.Aligned.sortedByCoord.out.bam -fq Pt49_Pre.fq
+bedtools bamtofastq -i Pt4_Pre_E9021023-6.Aligned.sortedByCoord.out.bam -fq Pt4_Pre.fq
+bedtools bamtofastq -i Pt52_Pre_AD506075-6.Aligned.sortedByCoord.out.bam -fq Pt52_Pre.fq
+bedtools bamtofastq -i Pt59_Pre_AD823915-5.Aligned.sortedByCoord.out.bam -fq Pt59_Pre.fq
+bedtools bamtofastq -i Pt5_Pre_E9021022-6.Aligned.sortedByCoord.out.bam -fq Pt5_Pre.fq
+bedtools bamtofastq -i Pt62_Pre_AD608303-5.Aligned.sortedByCoord.out.bam -fq Pt62_Pre.fq
+bedtools bamtofastq -i Pt65_Pre_AD793919-6.Aligned.sortedByCoord.out.bam -fq Pt65_Pre.fq
+bedtools bamtofastq -i Pt66_Pre_AD667850-6.Aligned.sortedByCoord.out.bam -fq Pt66_Pre.fq
+bedtools bamtofastq -i Pt67_Pre_AD506074-6.Aligned.sortedByCoord.out.bam -fq Pt67_Pre.fq
+bedtools bamtofastq -i Pt72_Pre_AD793922-5.Aligned.sortedByCoord.out.bam -fq Pt72_Pre.fq
+bedtools bamtofastq -i Pt76_Pre_AD667852-6.Aligned.sortedByCoord.out.bam -fq Pt76_Pre.fq
+bedtools bamtofastq -i Pt77_Pre_AD733591-7.Aligned.sortedByCoord.out.bam -fq Pt77_Pre.fq
+bedtools bamtofastq -i Pt78_Pre_AD467018-5.Aligned.sortedByCoord.out.bam -fq Pt78_Pre.fq
+bedtools bamtofastq -i Pt79_Pre_AD733587-5.Aligned.sortedByCoord.out.bam -fq Pt79_Pre.fq
+bedtools bamtofastq -i Pt82_Pre_AD823914-8.Aligned.sortedByCoord.out.bam -fq Pt82_Pre.fq
+bedtools bamtofastq -i Pt84_Pre_AD486532-5.Aligned.sortedByCoord.out.bam -fq Pt84_Pre.fq
+bedtools bamtofastq -i Pt85_Pre_AD486329-5.Aligned.sortedByCoord.out.bam -fq Pt85_Pre.fq
+bedtools bamtofastq -i Pt89_Pre_AE070951-5.Aligned.sortedByCoord.out.bam -fq Pt89_Pre.fq
+bedtools bamtofastq -i Pt8_Pre_AD153354-6.Aligned.sortedByCoord.out.bam -fq Pt8_Pre.fq
+bedtools bamtofastq -i Pt90_Pre_AD467873-6.Aligned.sortedByCoord.out.bam -fq Pt90_Pre.fq
+bedtools bamtofastq -i Pt92_Pre_AE134060-5.Aligned.sortedByCoord.out.bam -fq Pt92_Pre.fq
+bedtools bamtofastq -i Pt94_Pre_AD732850-6.Aligned.sortedByCoord.out.bam -fq Pt94_Pre.fq
+bedtools bamtofastq -i Pt98_Pre_AD733586-8.Aligned.sortedByCoord.out.bam -fq Pt98_Pre.fq
+bedtools bamtofastq -i Pt9_Pre_E9021024-6.Aligned.sortedByCoord.out.bam -fq Pt9_Pre.fq
+
+
+bedtools bamtofastq -i Pt101_Pre_AD486328-5.Aligned.sortedByCoord.out.bam -fq Pt101_Pre.fq
+bedtools bamtofastq -i Pt103_Pre_AE134058-2.Aligned.sortedByCoord.out.bam -fq Pt103_Pre.fq
+bedtools bamtofastq -i Pt106_Pre_AD502250-5.Aligned.sortedByCoord.out.bam -fq Pt106_Pre.fq
+bedtools bamtofastq -i Pt10_Pre_E9047565-6.Aligned.sortedByCoord.out.bam -fq Pt10_Pre.fq
+
+bedtools bamtofastq -i Pt98_Pre_AD733586-8.Aligned.sorted.out.bam -fq Pt98_Pre_M.fq
+bedtools bamtofastq -i Pt10_Pre_E9047565-6.Aligned.sorted.out.bam -fq Pt10_Pre_M.fq
+bedtools bamtofastq Pt101_Pre_AD486328-5.Aligned.sorted.out.bam -fq Pt101_Pre_M.fq
+bedtools bamtofastq Pt103_Pre_AE134058-2.Aligned.sorted.out.bam -fq Pt103_Pre_M.fq
+bedtools bamtofastq Pt106_Pre_AD502250-5.Aligned.sorted.out.bam -fq Pt106_Pre_M.fq
+bedtools bamtofastq Pt94_Pre_AD732850-6.Aligned.sorted.out.bam -fq Pt94_Pre_M.fq
+bedtools bamtofastq Pt92_Pre_AE134060-5.Aligned.sorted.out.bam -fq Pt92_Pre_M.fq
+bedtools bamtofastq Pt90_Pre_AD467873-6.Aligned.sorted.out.bam -fq Pt90_Pre_M.fq
+bedtools bamtofastq Pt8_Pre_AD153354-6.Aligned.sorted.out.bam -fq Pt8_Pre_M.fq
+bedtools bamtofastq Pt89_Pre_AE070951-5.Aligned.sorted.out.bam -fq Pt89_Pre_M.fq
+bedtools bamtofastq Pt11_Pre.bam -fq Pt11_Pre_M.fq
+bedtools bamtofastq Pt17_Pre.bam -fq Pt17_Pre_M.fq
+bedtools bamtofastq Pt18_Pre.bam -fq Pt18_Pre_M.fq
+bedtools bamtofastq Pt1_Pre.bam -fq Pt1_Pre_M.fq
+bedtools bamtofastq Pt23_Pre.bam -fq Pt23_Pre_M.fq
+bedtools bamtofastq Pt24_Pre.bam -fq Pt24_Pre_M.fq
+bedtools bamtofastq Pt26_Pre.bam -fq Pt26_Pre_M.fq
+bedtools bamtofastq Pt27_Pre.bam -fq Pt27_Pre_M.fq
+bedtools bamtofastq Pt28_Pre.bam -fq Pt28_Pre_M.fq
+bedtools bamtofastq Pt29_Pre.bam -fq Pt29_Pre_M.fq
+bedtools bamtofastq Pt2_Pre.bam -fq Pt2_Pre_M.fq
+bedtools bamtofastq Pt30_Pre.bam -fq Pt30_Pre_M.fq
+bedtools bamtofastq Pt31_Pre.bam -fq Pt31_Pre_M.fq
+bedtools bamtofastq Pt34_Pre.bam -fq Pt34_Pre_M.fq
+bedtools bamtofastq Pt36_Pre.bam -fq Pt36_Pre_M.fq
+bedtools bamtofastq Pt37_Pre.bam -fq Pt37_Pre_M.fq
+bedtools bamtofastq Pt38_Pre.bam -fq Pt38_Pre_M.fq
+bedtools bamtofastq Pt39_Pre.bam -fq Pt39_Pre_M.fq
+bedtools bamtofastq Pt3_Pre.bam -fq Pt3_Pre_M.fq
+bedtools bamtofastq Pt44_Pre.bam -fq Pt44_Pre_M.fq
+bedtools bamtofastq Pt46_Pre.bam -fq Pt46_Pre_M.fq
+bedtools bamtofastq Pt47_Pre.bam -fq Pt47_Pre_M.fq
+bedtools bamtofastq Pt48_Pre.bam -fq Pt48_Pre_M.fq
+bedtools bamtofastq Pt49_Pre.bam -fq Pt49_Pre_M.fq
+bedtools bamtofastq Pt4_Pre.bam -fq Pt4_Pre_M.fq
+bedtools bamtofastq Pt52_Pre.bam -fq Pt52_Pre_M.fq
+bedtools bamtofastq Pt59_Pre.bam -fq Pt59_Pre_M.fq
+bedtools bamtofastq Pt5_Pre.bam -fq Pt5_Pre_M.fq
+bedtools bamtofastq Pt62_Pre.bam -fq Pt62_Pre_M.fq
+bedtools bamtofastq Pt65_Pre.bam -fq Pt65_Pre_M.fq
+bedtools bamtofastq Pt66_Pre.bam -fq Pt66_Pre_M.fq
+bedtools bamtofastq Pt67_Pre.bam -fq Pt67_Pre_M.fq
+bedtools bamtofastq Pt72_Pre.bam -fq Pt72_Pre_M.fq
+bedtools bamtofastq Pt76_Pre.bam -fq Pt76_Pre_M.fq
+bedtools bamtofastq Pt77_Pre.bam -fq Pt77_Pre_M.fq
+bedtools bamtofastq Pt78_Pre.bam -fq Pt78_Pre_M.fq
+bedtools bamtofastq Pt79_Pre.bam -fq Pt79_Pre_M.fq
+bedtools bamtofastq Pt82_Pre.bam -fq Pt82_Pre_M.fq
+bedtools bamtofastq Pt84_Pre.bam -fq Pt84_Pre_M.fq
+bedtools bamtofastq Pt85_Pre.am -fq Pt85_Pre_M.fq
+
+
+
