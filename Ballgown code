@@ -22,6 +22,15 @@ Thu Sep 14 16:29:35 2017: Merging transcript data
 Wrapping up the results
 Thu Sep 14 16:29:38 2017
 > 
+>bg_filt = subset(bg,"rowVars(texpr(bg)) >1",genomesubset=TRUE)
+
+>full_table = texpr(bg, 'all')
+>write.csv(full_table, "TimothyChan_Genocode.csv", row.names=FALSE)
+
+>full_table_filt = texpr(bg_filt, 'all')
+>write.csv(full_table_filt, "TimothyChan_Genocode_filt.csv", row.names=FALSE)
+>
+>
 > results_transcripts = stattest(bg, feature="transcript",covariate="mutsta", getFC=TRUE, meas="FPKM") 
 > 
 > results_genes = stattest(bg, feature="gene", covariate="mutsta", getFC=TRUE, meas="FPKM") 
