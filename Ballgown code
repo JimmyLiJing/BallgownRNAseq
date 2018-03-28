@@ -60,3 +60,21 @@ In boxplot.default(groups, ...) : NAs introduced by coercion
 > q()
 ballgown::transcriptNames(bg)[78003]
 plot(fpkm[78003,] ~ pheno_data$mutsta, border=c(1,2), main=paste(ballgown::geneNames(bg)[78003],' : ', ballgown::transcriptNames(bg)[78003]),pch=19, xlab="mutsta", ylab='log2(FPKM+1)')
+
+---combine FPKM value by gene_id
+x = read.csv("TimothyChan_Genocode-3.csv", header=TRUE)
+> class(x)
+[1] "data.frame"
+b = aggregate(. ~gene_id, x, sum)
+write.csv(b, "TimothyChan_Genocode-4.csv")
+head(b, 4)
+
+----add gene names by gene_id
+a = read.csv("genename.csv", header=TRUE)
+b = read.csv("TimothyChan_Genocode-4.csv", header=TRUE)
+total = merge(a,b, by="gene_id")
+write.csv(total, "TimothyChan_Genocode-5.csv")
+
+---combine FPKM value by gene_name
+c = aggregate(. ~gene_name, total, sum)
+write.csv(c, "TimothyChan_Genocode-6.csv")
