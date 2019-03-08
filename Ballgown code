@@ -78,3 +78,13 @@ write.csv(total, "TimothyChan_Genocode-5.csv")
 ---combine FPKM value by gene_name
 c = aggregate(. ~gene_name, total, sum)
 write.csv(c, "TimothyChan_Genocode-6.csv")
+
+
+# to check installed package
+ installed.packages()[, c("Package", "LibPath")]
+ 
+ #to check loaed package
+ sessionInfo()
+ 
+ 
+ 
