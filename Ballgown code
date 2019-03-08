@@ -5,6 +5,17 @@ git commit -m "first commit"
 git remote add origin https://github.com/JimmyLiJing/BallgownRNAseq.git
 git push -u origin master
 
+# The easiest way to get dplyr is to install the whole tidyverse:
+install.packages("tidyverse")
+
+# Alternatively, install just dplyr:
+install.packages("dplyr")
+
+# Or the development version from GitHub:
+# install.packages("devtools")
+devtools::install_github("tidyverse/dplyr")
+
+
 > pheno_data <- read.table("Huntsman.csv", header=TRUE, colClasses = rep("character", 3))
 > pheno_data = pheno_data[order(pheno_data$ids),]
 
